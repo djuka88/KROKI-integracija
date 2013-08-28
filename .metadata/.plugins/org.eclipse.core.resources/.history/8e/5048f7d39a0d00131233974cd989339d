@@ -1,0 +1,5 @@
+package kroki.app.action.django;
+
+public class ExportDjangoAction extends AbstractAction{
+
+}

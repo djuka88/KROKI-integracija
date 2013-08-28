@@ -1,0 +1,8 @@
+package kroki.app.action.django;
+
+public enum ExportProjectType {
+
+	SWING,
+	WEB,
+	DJANGO_WEB
+}

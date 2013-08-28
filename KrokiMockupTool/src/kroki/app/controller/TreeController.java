@@ -73,6 +73,7 @@ public class TreeController extends AbstractTreeController {
 			} else if (node instanceof BussinesSubsystem) {
 				//System.out.println("BUSSINESSUBSYSTEM");
 			} else if (node instanceof VisibleClass) {
+				@SuppressWarnings("unused")
 				VisibleClass v = (VisibleClass) node;
 				if(node instanceof StandardPanel) {
 				}

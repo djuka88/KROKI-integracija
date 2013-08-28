@@ -1,0 +1,5 @@
+package kroki.app.action.django;
+
+public enum ExportProjectType {
+
+}

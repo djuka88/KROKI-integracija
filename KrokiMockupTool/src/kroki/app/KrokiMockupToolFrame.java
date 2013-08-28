@@ -38,6 +38,7 @@ import kroki.app.action.SaveAction;
 import kroki.app.action.SaveAllAction;
 import kroki.app.action.SaveAsAction;
 import kroki.app.action.UndoAction;
+import kroki.app.action.django.ExportDjangoAction;
 import kroki.app.gui.GuiManager;
 import kroki.app.gui.console.CommandPanel;
 import kroki.app.utils.ImageResource;
@@ -198,6 +199,7 @@ public class KrokiMockupToolFrame extends JFrame {
         export.setText("Export...");
         export.add(new ExportSwingAction());
         export.add(new ExportWebAction());
+        export.add(new ExportDjangoAction());
         
         JMenu run = new JMenu();
         run.setName("run");

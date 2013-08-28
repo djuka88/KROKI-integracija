@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="dist/Kroki.jar"/>
+	<classpathentry kind="lib" path="dist/Kroki.jar" sourcepath="src/kroki/mockup/model"/>
 	<classpathentry kind="lib" path="dist/lib/appframework-1.0.3.jar"/>
 	<classpathentry kind="lib" path="dist/lib/kroki-commons.jar"/>
 	<classpathentry kind="lib" path="dist/lib/kroki-intl.jar"/>

@@ -24,7 +24,7 @@ import javax.persistence.JoinTable;
    /** 
    Class generated using Kroki EJBGenerator 
    @Author mrd 
-   Creation date: 14.06.2013  11:57:05h
+   Creation date: 27.08.2013  20:19:02h
    **/
 
 @Entity

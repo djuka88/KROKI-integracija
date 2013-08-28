@@ -1,0 +1,19 @@
+package kroki.app.generators.django;
+
+import java.io.File;
+
+public class DirectoryTreeGenerator {
+	
+	public void generateDirectories(String filePath,String projectName){
+		
+		//create container for project, same name as project
+		boolean success=(new File(filePath+File.separator+projectName).mkdir());
+		
+		if(success){
+			
+			//create project folder
+			success=(new File(filePath+File.separator+projectName+File.separator+projectName).mkdir());
+		}
+	}
+
+}

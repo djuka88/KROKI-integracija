@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 7 resources" deleteContents="false" description="Delete 7 resources" element1="/Kroki" element2="/kroki-commons" element3="/kroki-intl" element4="/Kroki-UIProfil" element5="/KrokiMockupTool" element6="/SwingApp" element7="/WebApp" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="7" stamp="1377273972750"/>
+</session>

@@ -13,8 +13,8 @@ import kroki.mockup.model.Component;
 import kroki.mockup.view.GraphElement;
 
 /**
- * Klasa koja predstavlja painter za komponente korisničkog interfejsa. Nju svaka konkretna komponenta nasleđuje i implementira svoju {@link #paint(java.awt.Graphics) } metodu.
- * @author Vladan Marsenić (vladan.marsenic@gmail.com)
+ * Klasa koja predstavlja painter za komponente korisniÄ�kog interfejsa. Nju svaka konkretna komponenta nasleÄ‘uje i implementira svoju {@link #paint(java.awt.Graphics) } metodu.
+ * @author Vladan MarseniÄ‡ (vladan.marsenic@gmail.com)
  */
 public abstract class ComponentPainter extends ElementPainter {
 
@@ -22,8 +22,8 @@ public abstract class ComponentPainter extends ElementPainter {
     protected Shape shape;
 
     /**
-     * Konstrukror <code>ComponentPainter</code>-a. Prosleđeni parametri ne smeju imati <code>null</code> vrednosti.
-     * @param graphElement grafički element
+     * Konstrukror <code>ComponentPainter</code>-a. ProsleÄ‘eni parametri ne smeju imati <code>null</code> vrednosti.
+     * @param graphElement grafiÄ�ki element
      * @param shape oblik koji se iscrtava
      */
     public ComponentPainter(GraphElement graphElement, Shape shape) {
@@ -32,8 +32,8 @@ public abstract class ComponentPainter extends ElementPainter {
     }
 
     /**
-     * Konsturktor <code>ComponentPainter</code>-a. Ovaj konstruktor kreira podrazumevani oblik {@link #shape} na osnovu dimenzuja dobijenih iz prosleđenog grafičkog elementa {@link #graphElement}.
-     * @param graphElement grafički element
+     * Konsturktor <code>ComponentPainter</code>-a. Ovaj konstruktor kreira podrazumevani oblik {@link #shape} na osnovu dimenzuja dobijenih iz prosleÄ‘enog grafiÄ�kog elementa {@link #graphElement}.
+     * @param graphElement grafiÄ�ki element
      */
     public ComponentPainter(GraphElement graphElement) {
         super(graphElement);

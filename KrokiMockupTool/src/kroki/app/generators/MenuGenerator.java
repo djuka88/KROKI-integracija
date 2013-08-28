@@ -184,9 +184,11 @@ public class MenuGenerator {
 	}
 	
 	public void writeDocument(Document doc) {
-		File f = new File(".");
-		String appPath = f.getAbsolutePath().substring(0,f.getAbsolutePath().length()-1);
-		File fout = new File(appPath.substring(0, appPath.length()-16) +  "WebApp" + File.separator + "src" + File.separator + "adapt" + File.separator +  "templates" + File.separator + "treemenuGenerated.html");
+		//File f = new File(".");
+		//String appPath = f.getAbsolutePath().substring(0,f.getAbsolutePath().length()-1);
+		String appPath="C:\\Users\\Milan\\Desktop";
+		//File fout = new File(appPath.substring(0, appPath.length()-16) +  "WebApp" + File.separator + "src" + File.separator + "adapt" + File.separator +  "templates" + File.separator + "treemenuGenerated.html");
+		File fout = new File(appPath+File.separator+"menu.html");
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer;
 		try {

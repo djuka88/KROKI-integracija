@@ -89,7 +89,7 @@ public class ProjectExporter {
 	 */
 	public void export(File file, BussinesSubsystem proj, String message) {
 		this.project = proj;
-		
+
 		//collecting the data from KROKI project
 		getData(proj);
 
@@ -436,7 +436,7 @@ public class ProjectExporter {
 	public void writeProjectName(String name) {
 		File f = new File(".");
 		String appPath = f.getAbsolutePath().substring(0,f.getAbsolutePath().length()-1);
-		
+
 		//Configuration file
 		File propertiesFile = new File(appPath.substring(0, appPath.length()-16) + "SwingApp" + File.separator + "props" + File.separator + "main.properties");
 		String toAppend = "main.form.name";
@@ -695,7 +695,7 @@ public class ProjectExporter {
 	}
 
 	//------------------------------------------------------------------------------------------------------------------ || GETTERS AND SETTERS
-	
+
 	public ArrayList<EJBClass> getClasses() {
 		return classes;
 	}
@@ -727,5 +727,5 @@ public class ProjectExporter {
 	public void setEnumerations(ArrayList<Enumeration> enumerations) {
 		this.enumerations = enumerations;
 	}
-	
+
 }
