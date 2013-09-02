@@ -1,42 +1,44 @@
 package kroki.app.generators.django;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
-import freemarker.cache.FileTemplateLoader;
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
+import kroki.app.generators.utils.EJBClass;
+import kroki.profil.subsystem.BussinesSubsystem;
+import kroki.profil.utils.DatabaseProps;
 
 public class SettingsFileGenerator {
 
-	@SuppressWarnings({ "unused", "rawtypes" })
-	public void generateSettingsFile(String filePath,String projectName){
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public void generateSettingsFile(String filePath,BussinesSubsystem proj,ArrayList<EJBClass> classes){
 		
-		String projectRoot=filePath+File.separator+projectName;
+		String projectRoot=filePath+File.separator+proj.getLabel();
 		String krokiRoot=new File("").getAbsolutePath();
 		
-		Configuration cfg = new Configuration();
-		cfg.setObjectWrapper(new DefaultObjectWrapper());
-		FileTemplateLoader templateLoader;
+		String templateDir=krokiRoot + File.separator+"src/kroki/app/generators/templates/django";
 		
-		try {
-			templateLoader = new FileTemplateLoader(new File(krokiRoot + File.separator+"src/kroki/app/generators/templates/django"));
-			cfg.setTemplateLoader(templateLoader);
-			Template tpl = cfg.getTemplate("settings.ftl");
+		//podesi default vrednosti za bazu ako nije odabrana
+		DatabaseProps dbprops=new DatabaseProps();
+		if(proj.getDBConnectionProps().getProfile()==5){ //test profil
+			dbprops.setProfile(1);
+			dbprops.setHost("localhost");
+			dbprops.setSchema("postgres");
+			dbprops.setUsername("postgres");
+			dbprops.setPassword("piramida");
+			dbprops.setPort(5432);
 			
-			File fout=new File(projectRoot+File.separator+projectName+File.separator+"settings.py");
-			OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(fout));
-			Map model = new TreeMap();
-			
-			//ovde dodaj podatke
-			
-		} catch (IOException e) {
-			e.printStackTrace();
+			proj.setDBConnectionProps(dbprops);
 		}
+		
+		Map model = new TreeMap();
+		model.put("project_label",proj.getLabel());
+		model.put("project_ccname",proj.name());
+		model.put("db_props", proj.getDBConnectionProps());
+		model.put("template_dir", projectRoot+File.separator+proj.name()+File.separator+"templates");
+		model.put("st_forms", classes);
+		
+		TemplateFileGenerator.generateFile(templateDir, "settings.ftl", projectRoot+File.separator+proj.name(), "settings.py", model);
 	}
 }

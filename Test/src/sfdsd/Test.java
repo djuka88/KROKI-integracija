@@ -11,9 +11,7 @@ public class Test {
 		// TODO Auto-generated method stub
 
 		File f=new File("");
-		System.out.println(f.getAbsolutePath());
-		
-		boolean a=f.
+		System.out.println("\"");
 	}
 
 }

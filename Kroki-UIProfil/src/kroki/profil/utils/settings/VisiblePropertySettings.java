@@ -210,7 +210,17 @@ public class VisiblePropertySettings extends VisibleElementSettings {
 				VisibleProperty prop = (VisibleProperty) visibleElement;
 				String[] values = valuesTa.getText().split("\\n");
 				String enumeration = "";
-				for(int i=0; i<values.length; i++) {
+				int size=values.length;
+				
+				//dodao Milan Djukic
+				//ovde je bio bug... kada se obrise lista vrednosti (znaci prazna je)
+				//program automatski dodaje novi red u listu...
+				//ovo je zbog toga sto split funkcija kreira jedan novi string uvek
+				//pa zbog toga size nikad nije nula
+				if(values.length==1 && values[0].equals(""))
+					size=0;
+				
+				for(int i=0; i<size; i++) {
 					enumeration +=values[i] + ";";
 				}
 				prop.setEnumeration(enumeration);
@@ -310,7 +320,14 @@ public class VisiblePropertySettings extends VisibleElementSettings {
         if(visibleProperty.getEnumeration() != null) {
         	valuesTa.setText("");
             String[] vals = visibleProperty.getEnumeration().split(";");
-            for(int i=0; i<vals.length; i++) {
+            
+            //dodao Milan Djukic
+            //isto objasnjenje kao u redu 215
+            int size=vals.length;
+            if(vals.length==1 && vals[0].equals(""))
+            	size=0;
+            
+            for(int i=0; i<size; i++) {
             	valuesTa.append(vals[i] + "\n");
             }
         }

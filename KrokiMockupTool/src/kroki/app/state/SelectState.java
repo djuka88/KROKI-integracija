@@ -58,6 +58,7 @@ public class SelectState extends State {
             }
         }
         c.repaint();
+        int a=0;
     }
 
     @Override

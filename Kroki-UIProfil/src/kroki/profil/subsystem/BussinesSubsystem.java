@@ -7,6 +7,8 @@ package kroki.profil.subsystem;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import kroki.commons.camelcase.NamingUtil;
 import kroki.profil.ComponentType;
 import kroki.profil.VisibleElement;
 import kroki.profil.utils.DatabaseProps;
@@ -38,6 +40,13 @@ public class BussinesSubsystem extends VisibleElement implements UmlPackage {
     public BussinesSubsystem(String label, boolean visible, ComponentType componentType, BussinesSubsystem owner) {
         super(label, visible, componentType);
         this.nestingPackage = owner;
+        
+        // dodao Milan Djukic
+        // potrebno mi je bilo zbog djanga, django ne dozvoljava razmak u imenu projekta
+        // a posto se ova varijabla nigde ne podesava(uvek je null) mislio sam da je pametno da
+        // je ovde podesim
+        NamingUtil cc=new NamingUtil();
+        this.name=cc.toCamelCase(label, false);
     }
 
     /**************/

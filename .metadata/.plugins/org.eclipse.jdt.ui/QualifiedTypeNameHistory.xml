@@ -3,4 +3,5 @@
 <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="kroki.app.generators.django.SettingsFileGenerator"/>
+<fullyQualifiedTypeName name="kroki.profil.utils.DatabaseProps"/>
 </qualifiedTypeNameHistroy>

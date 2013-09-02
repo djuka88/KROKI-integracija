@@ -1,4 +1,4 @@
-# Django settings for ${project_name} project.
+# Django settings for ${project_label} project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,13 +11,17 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 											# Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'C:/Users/Milan/Desktop/vezba_django/mysite/baza.db',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
+    	<#-- Django za sada podrzava samo PostgreSQL (profile=2) i MySQL (profile=1) -->
+    <#if db_props.profile == 2>
+        'ENGINE': 'django.db.backends.mysql',
+    <#elseif db_props.profile == 1>
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    </#if>
+        'NAME': '${db_props.schema}',
+        'USER': '${db_props.username}',
+        'PASSWORD': '${db_props.password}',
+        'HOST': '${db_props.host}',
+        'PORT': '${db_props.port?c}',
     }
 }
 
@@ -25,12 +29,22 @@ DATABASES = {
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
 
+<#compress>
+
+<#-- TIME_ZONE promenljiva je za sada hardkodirana na Beograd -->
+
+</#compress>
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
 TIME_ZONE = 'Europe/Belgrade Europe/Ljubljana Europe/Sarajevo Europe/Skopje Europe/Zagreb'
 
+<#compress>
+
+<#-- LANGUAGE_CODE promenljiva je za sada hardkodirana na en-us -->
+
+</#compress>
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
@@ -82,6 +96,11 @@ STATICFILES_FINDERS = (
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
+<#compress>
+
+<#-- Hm... -->
+
+</#compress>
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'kmyej5v2@l315&mcr_xg^_suct*)1s$x&m8p_!+)qdw8+)g@&^'
 
@@ -102,16 +121,16 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'mysite.urls'
+ROOT_URLCONF = '${project_ccname}.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'mysite.wsgi.application'
+WSGI_APPLICATION = '${project_ccname}.wsgi.application'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    'C:/Users/Milan/Desktop/vezba_django/mysite/mysite/templates'
+    '${template_dir}'
 )
 
 INSTALLED_APPS = (
@@ -125,7 +144,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'polls'
+    'st_forms'
 )
 
 # A sample logging configuration. The only tangible logging

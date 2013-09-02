@@ -1,8 +1,0 @@
-package kroki.app.export;
-
-public enum ProjectExporterType {
-
-	SWING,
-	WEB,
-	DJANGO_WEB
-}

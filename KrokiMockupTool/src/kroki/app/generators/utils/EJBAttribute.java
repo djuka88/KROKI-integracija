@@ -15,6 +15,9 @@ public class EJBAttribute {
 	private Enumeration enumeration;
 	private ArrayList<EJBAttribute> columnRefs;
 	
+	//dodao Milan Djukic
+	private String defaultValue;
+
 	public EJBAttribute(ArrayList<String> annotations, String type, String name,
 			String label, String databaseName, Boolean mandatory,
 			Boolean unique, Boolean representative, Enumeration enumeration) {
@@ -109,5 +112,13 @@ public class EJBAttribute {
 
 	public void setColumnRefs(ArrayList<EJBAttribute> columnRefs) {
 		this.columnRefs = columnRefs;
+	}
+	
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+
+	public void setDefaultValue(String defaultValue) {
+		this.defaultValue = defaultValue;
 	}
 }

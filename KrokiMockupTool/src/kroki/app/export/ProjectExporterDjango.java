@@ -6,7 +6,11 @@ import kroki.app.KrokiMockupToolApp;
 import kroki.app.exceptions.NoZoomPanelException;
 import kroki.app.generators.MenuGenerator;
 import kroki.app.generators.django.DirectoryTreeGenerator;
+import kroki.app.generators.django.ModelsFileGenerator;
 import kroki.app.generators.django.SettingsFileGenerator;
+import kroki.app.generators.django.TestsFileGenerator;
+import kroki.app.generators.django.URLsFileGenerator;
+import kroki.app.generators.django.ViewsFileGenerator;
 import kroki.app.generators.utils.EJBAttribute;
 import kroki.app.generators.utils.EJBClass;
 import kroki.app.generators.utils.Enumeration;
@@ -52,6 +56,10 @@ public class ProjectExporterDjango {
 	//moje
 	private DirectoryTreeGenerator dirGenerator;
 	private SettingsFileGenerator settingsGenerator;
+	private URLsFileGenerator urlsGenerator;
+	private ModelsFileGenerator modelsGenerator;
+	private ViewsFileGenerator viewsGenerator;
+	private TestsFileGenerator testsGenerator;
 
 	
 	private String exportApsolutePath=null;
@@ -71,6 +79,10 @@ public class ProjectExporterDjango {
 		//moje
 		dirGenerator=new DirectoryTreeGenerator();
 		settingsGenerator=new SettingsFileGenerator();
+		urlsGenerator=new URLsFileGenerator();
+		modelsGenerator=new ModelsFileGenerator();
+		viewsGenerator=new ViewsFileGenerator();
+		testsGenerator=new TestsFileGenerator();
 	}
 
 	/**
@@ -89,7 +101,12 @@ public class ProjectExporterDjango {
 		
 		// kreiranje menija
 		//menuGenerator.generateWEBMenu(menus);
-		dirGenerator.generateDirectories(exportApsolutePath, proj.getLabel());
+		dirGenerator.generateDirectories(exportApsolutePath, project);
+		settingsGenerator.generateSettingsFile(exportApsolutePath, project, classes);
+		urlsGenerator.generateURLFile(exportApsolutePath, project);
+		modelsGenerator.generateModels(exportApsolutePath, project,classes);
+		viewsGenerator.generateViews(exportApsolutePath, project);
+		testsGenerator.generateTests(exportApsolutePath, project);
 		
 		//configuration files generation from collected data
 		//separate generator classes are called for swing and web application
@@ -137,7 +154,7 @@ public class ProjectExporterDjango {
 		}
 
 		//Add one-to-many attributes to classes
-		addReferences();
+		//addReferences(); mislim da ovo ne treba
 		//add default data
 		//addDefaultData(proj);
 	}
@@ -253,39 +270,76 @@ public class ProjectExporterDjango {
 
 	/**
 	 * Gets data form VisibleProperty and constructs corresponding EJBAttribute object
-	 * Prilagodi kasnije, ne trebaju mi anotacije---> MILAN
 	 * @param vp
 	 * @return
 	 */
 	public EJBAttribute getVisiblePropertyData(VisibleProperty vp) {
-		String type = "java.lang.String";
+		
+		String type=null;
+		//String widget=null;
 		Enumeration enumeration = null;
-		if(vp.getComponentType() == ComponentType.TEXT_FIELD) {
-			if(vp.getDataType().equals("BigDecimal")) {
-				type = "java.math.BigDecimal";
-			}else if(vp.getDataType().equals("Date")) {
-				type = "java.util.Date";
-			}
-		}else if(vp.getComponentType() == ComponentType.CHECK_BOX) {
-			type =  "java.lang.Boolean";
-		}else if (vp.getComponentType() == ComponentType.COMBO_BOX) {
-			//   DATA USED FOR ENUMERATION GENERATION    
+		boolean mandatory=false;
+		String defaultValue=null;
+		
+		if(vp.getComponentType()==ComponentType.TEXT_FIELD){
+			if(vp.getDataType().equals("String"))
+				type="CharField";
+			else if(vp.getDataType().equals("Integer"))
+				type="IntegerField";
+			else if(vp.getDataType().equals("Long"))
+				type="BigIntegerField";
+			else if(vp.getDataType().equals("BigDecimal"))
+				type="DecimalField";
+			else if(vp.getDataType().equals("Date")) //django podrzava i DateTimeField, za sada cu ostaviti ovako pa cemo videti...
+				type="DateField";
+		}
+		else if(vp.getComponentType()==ComponentType.TEXT_AREA){
+			type="TextField";
+		}
+		else if(vp.getComponentType() == ComponentType.CHECK_BOX)
+			type="BooleanField";
+		else if(vp.getComponentType() == ComponentType.COMBO_BOX){
+			
+			type="CharField";
+			
+			//   DATA USED FOR ENUMERATION GENERATION
 			String enumName = cc.toCamelCase(vp.getLabel(), false);
 			enumName += cc.toCamelCase(vp.umlClass().name(), false) + "Enum";
 			String enumClass = vp.umlClass().name();
 			String enumProp = cc.toCamelCase(vp.getLabel(), true);
 			String[] enumValues = vp.getEnumeration().split(";");
+			
+			if(enumValues.length==1 && enumValues[0].equals(""))
+				enumValues=null;
+			
 			enumeration = new Enumeration(enumName, vp.getLabel(), enumClass, enumProp, enumValues);
 			enumerations.add(enumeration);
+		}
+		else if(vp.getComponentType() == ComponentType.RADIO_BUTTON){
+			// OVO ZA SADA NIJE IMPLEMENTIRANO
 		}
 
 		//ArrayList<String> anotations = new ArrayList<String>();
 		String name = cc.toCamelCase(vp.getLabel(), true);
 		String label = vp.getLabel();
 		String columnLabel = vp.getColumnLabel();
+		
+		//podesavanje mandatory obelezja
+		if(vp.lower()==1)
+			mandatory=true;
+		
+		//podesavanje mandatory obelezja
+		//ovde treba izvrsiti brdo provera.... Za sada neka ga ovako
+		if(vp.getDefaultValue()!=null){
+		if(!vp.getDefaultValue().equals(""))
+			defaultValue=vp.getDefaultValue();
+		}
 
 		//anotations.add("@Column(name = \"" + columnLabel + "\", unique = false, nullable = false)");
 		EJBAttribute attribute = new EJBAttribute(null, type, name, label, columnLabel, true, false, vp.isRepresentative(), enumeration);
+		attribute.setMandatory(mandatory);
+		attribute.setDefaultValue(defaultValue);
+		//attribute.setWidget(widget);
 		return attribute;
 	}
 
@@ -304,6 +358,12 @@ public class ProjectExporterDjango {
 			String databaseName = z.getLabel().substring(0, 1).toLowerCase() + z.getLabel().substring(1);
 			String label = z.getLabel();
 			Boolean mandatory = z.lower() != 0;
+			
+			//da ne bi mnogo menjao kod, prilagodio sam ovaj
+			//u polje label dodao sam type a type mi je ForeignKey
+			//da ne bi menjao templejt bolje je ovako....
+			label=type;
+			type="ForeignKey";
 
 			//anotations.add("@ManyToOne");
 			//anotations.add("@JoinColumn(name=\"" + propName + "\", referencedColumnName=\"ID\",  nullable = " + !mandatory + ")");
@@ -365,9 +425,9 @@ public class ProjectExporterDjango {
 						String name = ejbClass.getName() + "Set";
 						String type = "Set<" + ejbClass.getName() + ">";
 						String label = attribute.getLabel();
-						//String mappedBy = attribute.getName();
-						//ArrayList<String> annotations = new ArrayList<String>();
-						//annotations.add("@OneToMany(cascade = { ALL }, fetch = FetchType.LAZY, mappedBy = \"" + mappedBy + "\")");
+						String mappedBy = attribute.getName();
+						ArrayList<String> annotations = new ArrayList<String>();
+						annotations.add("@OneToMany(cascade = { ALL }, fetch = FetchType.LAZY, mappedBy = \"" + mappedBy + "\")");
 
 						EJBAttribute attr = new EJBAttribute(null, type, name, label, name, true, false, false, null);
 						oppositeCLass.getAttributes().add(attr);
