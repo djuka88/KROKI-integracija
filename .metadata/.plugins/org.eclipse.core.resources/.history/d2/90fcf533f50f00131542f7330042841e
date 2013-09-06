@@ -1,8 +1,0 @@
-package kroki.app.generators.django;
-
-public class SettingsFileGenerator {
-
-	public void generateSettingsFile(){
-		
-	}
-}

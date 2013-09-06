@@ -13,7 +13,9 @@ from django.db import models
 </#compress>
 <#list st_forms as form>
 
+<#if form.attributes?has_content>
 class ${form.name}(models.Model):
+</#if>
 <#compress>
 
 

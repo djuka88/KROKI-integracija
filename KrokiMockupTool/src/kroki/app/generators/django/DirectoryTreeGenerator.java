@@ -35,13 +35,19 @@ public class DirectoryTreeGenerator {
 			success=(new File(projectRoot+File.separator+"st_forms").mkdir());
 			
 			//create templates folder in st_forms folder
-			success=(new File(projectRoot+File.separator+File.separator+"st_forms"+File.separator+"templates").mkdir());
+			success=(new File(projectRoot+File.separator+"st_forms/templates").mkdir());
+			
+			//create static folder in st_forms folder
+			success=(new File(projectRoot+File.separator+"st_forms/static").mkdir());
 			
 			//create st_forms folder in templates folder
-			success=(new File(projectRoot+File.separator+File.separator+"st_forms"+File.separator+"templates"+File.separator+"st_forms").mkdir());
+			success=(new File(projectRoot+File.separator+"st_forms/templates/st_forms").mkdir());
+			
+			//create st_forms folder in static folder
+			success=(new File(projectRoot+File.separator+"st_forms/static/st_forms").mkdir());
 			
 			//create __init__.py file in st_forms folder
-			File init =new File(projectRoot+File.separator+"st_forms"+File.separator+"__init__.py");
+			File init =new File(projectRoot+File.separator+"st_forms/__init__.py");
 			if(!init.exists())
 				try {
 					init.createNewFile();

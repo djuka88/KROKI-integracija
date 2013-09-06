@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import kroki.app.KrokiMockupToolApp;
 import kroki.app.exceptions.NoZoomPanelException;
 import kroki.app.generators.MenuGenerator;
+import kroki.app.generators.django.AdminFileGenerator;
 import kroki.app.generators.django.DirectoryTreeGenerator;
+import kroki.app.generators.django.HTMLFileGenerator;
 import kroki.app.generators.django.ModelsFileGenerator;
 import kroki.app.generators.django.SettingsFileGenerator;
 import kroki.app.generators.django.TestsFileGenerator;
@@ -60,6 +62,8 @@ public class ProjectExporterDjango {
 	private ModelsFileGenerator modelsGenerator;
 	private ViewsFileGenerator viewsGenerator;
 	private TestsFileGenerator testsGenerator;
+	private AdminFileGenerator adminGenerator;
+	private HTMLFileGenerator htmlGenerator;
 
 	
 	private String exportApsolutePath=null;
@@ -83,6 +87,8 @@ public class ProjectExporterDjango {
 		modelsGenerator=new ModelsFileGenerator();
 		viewsGenerator=new ViewsFileGenerator();
 		testsGenerator=new TestsFileGenerator();
+		adminGenerator=new AdminFileGenerator();
+		htmlGenerator=new HTMLFileGenerator();
 	}
 
 	/**
@@ -107,6 +113,8 @@ public class ProjectExporterDjango {
 		modelsGenerator.generateModels(exportApsolutePath, project,classes);
 		viewsGenerator.generateViews(exportApsolutePath, project);
 		testsGenerator.generateTests(exportApsolutePath, project);
+		adminGenerator.generateAdministration(exportApsolutePath, project, classes);
+		htmlGenerator.generateHTMLs(exportApsolutePath,project,menus);
 		
 		//configuration files generation from collected data
 		//separate generator classes are called for swing and web application
@@ -174,10 +182,10 @@ public class ProjectExporterDjango {
 				throw new NoZoomPanelException(e.getMessage());
 			}
 		}else if (el instanceof ParentChild) {
-			/*if(swing) {
+			//if(swing) {
 				//parent-child panel don't need to be visible in web application menu [FOR NOW]
 				getParentChildData(el, menu);
-			}*/
+			//}
 		}
 		//after data fetching is done, put current element in elements list
 		elements.add(el);

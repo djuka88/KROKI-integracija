@@ -16,9 +16,13 @@ public class URLsFileGenerator {
 		
 		String templateDir=krokiRoot + File.separator+"src/kroki/app/generators/templates/django";
 		
+		// generisi glavni urls.py fajl
 		Map model = new TreeMap();
 		model.put("project_ccname", proj.name());
+		TemplateFileGenerator.generateFile(templateDir, "main_urls.ftl", projectRoot+File.separator+proj.name(), "urls.py", model);
 		
-		TemplateFileGenerator.generateFile(templateDir, "urls.ftl", projectRoot+File.separator+proj.name(), "urls.py", model);
+		// generisi urls.py fajl u projektu
+		model = new TreeMap();
+		TemplateFileGenerator.generateFile(templateDir, "project_urls.ftl", projectRoot+File.separator+"st_forms", "urls.py", model);
 	}
 }

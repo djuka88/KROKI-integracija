@@ -1,0 +1,98 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+ 
+.header {
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 2%;
+    width: 96%;
+    height: 40px;
+    background-color: #ff1fff;
+    display: block;
+}
+
+.treeView {
+    position: absolute;
+    margin-left: 30px;
+    margin-top: 70px;
+    width: 20%;
+    min-height: calc(100% - 70px);
+    display: block;
+    overflow: auto;
+    background-image: linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.28, rgb(133,238,158)),
+        color-stop(0.64, rgb(160,255,190))
+    );
+}
+
+.operations {
+    position: absolute;
+    width: 20%;
+    min-height: calc(100% - 70px);
+    background-color: #3f1fff;
+    display: block;
+    margin-top: 70px;
+    margin-left: calc(100% - 20% - 30px);
+    overflow: auto;
+    background-image: linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(255,0,0) 0%, rgb(255,255,255) 100%);
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.28, rgb(133,238,158)),
+        color-stop(0.64, rgb(160,255,190))
+    );
+}
+
+.toolbar {
+    position: absolute;
+    width: calc(60% - 80px);
+    height: 50px;
+    background-color: #1c1fdf;
+    display: block;
+    margin-top: 70px;
+    margin-left: calc(20% + 40px);
+    background-image: -ms-linear-gradient(top left, #FFFFFF 0%, #C6CDEF 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-linear-gradient(top left, #FFFFFF 0%, #C6CDEF 100%);
+
+/* Opera */ 
+background-image: -o-linear-gradient(top left, #FFFFFF 0%, #C6CDEF 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #FFFFFF), color-stop(1, #C6CDEF));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-linear-gradient(top left, #FFFFFF 0%, #C6CDEF 100%);
+
+/* W3C Markup, IE10 Release Preview */ 
+background-image: linear-gradient(to bottom right, #FFFFFF 0%, #C6CDEF 100%);
+}
+
+.mainPanel {
+    position: absolute;
+    width: calc(60% - 80px);
+    min-height: calc(100% - 130px);
+    background-color: #7cefde;
+    display: block;
+    margin-top: 130px;
+    margin-left: calc(20% + 40px);
+    overflow: auto;
+}
